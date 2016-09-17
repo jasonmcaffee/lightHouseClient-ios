@@ -20,7 +20,7 @@ class HueBridgeService: NSObject {
     static let singleton = HueBridgeService();
     
     override init(){
-        self.bridgeUrl = "192.168.1.118";
+        self.bridgeUrl = "http://192.168.1.118";
         super.init();
     }
     
@@ -29,30 +29,71 @@ class HueBridgeService: NSObject {
         super.init();
     }
     
+    func buildApiUrl(path: String) -> String{
+        return self.bridgeUrl + path;
+    }
+    
     func getSystemState(callback: (JSON, ErrorType?) -> ()){
         //let url = String(format: "%@/api/%@", bridgeUrl, userName);
-        let url:String = "https://jsonplaceholder.typicode.com/posts";
-        makeHTTPGetRequest(url, callback: callback);
+        let url:String = buildApiUrl("/api") + "/" + userName;
+        //makeHTTPGetRequest(url, callback: callback);
+        
+        makeHTTPGetRequest(url) { (json: JSON, error: ErrorType?) in
+            if let lightsJson = json["lights"].dictionary{
+                
+                for(key, lightJson):(String, JSON) in lightsJson{
+                    print("KEY IS : " + key);
+                    let light = Light(key: key, json: lightJson);
+                    print("light uniqueid is " + light.uniqueid!);
+                    
+                }
+            }else{
+                print("ERROOROROR: " + error.debugDescription);
+            }
+            
+            callback(json, error);
+            
+        }
     }
-    
     
     func makeHTTPGetRequest(path: String, callback:ServiceResponse){
-        let url = NSURL(string: "http://express.heartrails.com/api/json?method=getPrefectures")
-        let request = NSURLRequest(URL: url!)
-        let jsonResponse: JSON;
-        do{
-            let data = try NSURLConnection.sendSynchronousRequest(request, returningResponse: nil)
-            jsonResponse = JSON(data: data)
-            print(jsonResponse)
-            callback(jsonResponse, nil);
-        }catch {
-            print(error);
-            print("error!!!!!JFJFJFJFJF");
-            callback(nil, error);
-        }
-       
+        let request = NSMutableURLRequest(URL: NSURL(string: path)!)
+        let session = NSURLSession.sharedSession()
+        //request.HTTPMethod = "GET"
+        
+        //let params = ["username":"username", "password":"password"] as Dictionary<String, String>
+        
+        //request.HTTPBody = try? NSJSONSerialization.dataWithJSONObject(params, options: [])
+        
+       // request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        //request.addValue("application/json", forHTTPHeaderField: "Accept")
+        
+        let task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
+            print("Response: \(response)");
+            let jsonResponse = JSON(data: data!);
+            callback(jsonResponse, error);
+        });
+        
+        task.resume()
         
     }
+    
+//    func makeHTTPGetRequest(path: String, callback:ServiceResponse){
+//        let url = NSURL(string: "http://express.heartrails.com/api/json?method=getPrefectures")
+//        let request = NSURLRequest(URL: url!)
+//        let jsonResponse: JSON;
+//        do{
+//            let data = try NSURLConnection.sendSynchronousRequest(request, returningResponse: nil)
+//            jsonResponse = JSON(data: data)
+//            print(jsonResponse)
+//            callback(jsonResponse, nil);
+//        }catch {
+//            print(error);
+//            print("error!!!!!JFJFJFJFJF");
+//            callback(nil, error);
+//        }
+//        
+//    }
     
 //    func makeHTTPGetRequest(path: String, callback: ServiceResponse) {
 //        let request = NSMutableURLRequest(URL: NSURL(string: path)!)
