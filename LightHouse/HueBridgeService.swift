@@ -10,7 +10,7 @@
 import SwiftyJSON
 import Foundation
 
-typealias ServiceResponse = (JSON, NSError?) -> Void
+typealias ServiceResponse = (JSON, ErrorType?) -> Void
 
 class HueBridgeService: NSObject {
     
@@ -29,7 +29,7 @@ class HueBridgeService: NSObject {
         super.init();
     }
     
-    func getSystemState(callback: (JSON, NSError?) -> ()){
+    func getSystemState(callback: (JSON, ErrorType?) -> ()){
         //let url = String(format: "%@/api/%@", bridgeUrl, userName);
         let url:String = "https://jsonplaceholder.typicode.com/posts";
         makeHTTPGetRequest(url, callback: callback);
@@ -39,14 +39,18 @@ class HueBridgeService: NSObject {
     func makeHTTPGetRequest(path: String, callback:ServiceResponse){
         let url = NSURL(string: "http://express.heartrails.com/api/json?method=getPrefectures")
         let request = NSURLRequest(URL: url!)
+        let jsonResponse: JSON;
         do{
             let data = try NSURLConnection.sendSynchronousRequest(request, returningResponse: nil)
-            let hoge = JSON(data: data)
-            print(hoge)
+            jsonResponse = JSON(data: data)
+            print(jsonResponse)
+            callback(jsonResponse, nil);
         }catch {
             print(error);
             print("error!!!!!JFJFJFJFJF");
+            callback(nil, error);
         }
+       
         
     }
     
