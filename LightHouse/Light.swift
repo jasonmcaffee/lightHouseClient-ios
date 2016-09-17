@@ -8,10 +8,12 @@
 
 import Foundation
 import SwiftyJSON
+
 class Light : NSObject{
-    internal var name: String?;
-    internal var uniqueid: String?;
-    internal var type: String?;
+    var name: String?;
+    var uniqueid: String?;
+    var type: String?;
+    var state: State?;
     
     init(key: String, json: JSON){
         super.init();
@@ -23,6 +25,7 @@ class Light : NSObject{
         self.uniqueid = json["uniqueid"].string;
         self.type = json["type"].string;
         
+        self.state = State(json: json["state"]);
         
     }
 }
