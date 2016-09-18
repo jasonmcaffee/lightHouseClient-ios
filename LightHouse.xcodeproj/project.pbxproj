@@ -19,6 +19,7 @@
 		4DD232AD1D8DDD1300DBB44D /* HueBridgeServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD232AC1D8DDD1300DBB44D /* HueBridgeServiceTests.swift */; };
 		4DD232B11D8DF90600DBB44D /* Light.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD232B01D8DF90600DBB44D /* Light.swift */; };
 		4DD232B31D8E06EC00DBB44D /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD232B21D8E06EC00DBB44D /* State.swift */; };
+		4DD232B51D8E38C300DBB44D /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 4DD232B41D8E38C300DBB44D /* README.md */; };
 		A125E2255B36B8B667FC5517 /* Pods_LightHouseTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B9FCAB3C07301835B180F9D /* Pods_LightHouseTests.framework */; };
 		D851C9E5324BF3380ED4A1F6 /* Pods_LightHouse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24419AE8E0A73BB528002769 /* Pods_LightHouse.framework */; };
 		F07C8B08409B964E262D503B /* Pods_LightHouseUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F95C597E5A5EEF299BFA9CB /* Pods_LightHouseUITests.framework */; };
@@ -63,6 +64,7 @@
 		4DD232AC1D8DDD1300DBB44D /* HueBridgeServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HueBridgeServiceTests.swift; sourceTree = "<group>"; };
 		4DD232B01D8DF90600DBB44D /* Light.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Light.swift; sourceTree = "<group>"; };
 		4DD232B21D8E06EC00DBB44D /* State.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = State.swift; sourceTree = "<group>"; };
+		4DD232B41D8E38C300DBB44D /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		6B9FCAB3C07301835B180F9D /* Pods_LightHouseTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LightHouseTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6F95C597E5A5EEF299BFA9CB /* Pods_LightHouseUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LightHouseUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8744DABBA3C6640D0C7184C4 /* Pods-LightHouseTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LightHouseTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LightHouseTests/Pods-LightHouseTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -112,6 +114,7 @@
 		4D991F091D8DC68E00ED149A = {
 			isa = PBXGroup;
 			children = (
+				4DD232B41D8E38C300DBB44D /* README.md */,
 				4D991F141D8DC68E00ED149A /* LightHouse */,
 				4D991F291D8DC68E00ED149A /* LightHouseTests */,
 				4D991F341D8DC68E00ED149A /* LightHouseUITests */,
@@ -469,6 +472,7 @@
 				4D991F181D8DC68E00ED149A /* ViewController.swift in Sources */,
 				4DD232B11D8DF90600DBB44D /* Light.swift in Sources */,
 				4DD232AB1D8DD59000DBB44D /* EventBus.swift in Sources */,
+				4DD232B51D8E38C300DBB44D /* README.md in Sources */,
 				4DD232A91D8DCB3000DBB44D /* HueBridgeService.swift in Sources */,
 				4D991F161D8DC68E00ED149A /* AppDelegate.swift in Sources */,
 				4DD232B31D8E06EC00DBB44D /* State.swift in Sources */,
