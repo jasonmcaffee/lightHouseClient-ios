@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LightHouse/EventBus.swift"
-            timestampString = "495835542.451476"
+            timestampString = "495864643.226822"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "50"
-            endingLineNumber = "50"
+            startingLineNumber = "58"
+            endingLineNumber = "58"
             landmarkName = "unregister(_:)"
             landmarkType = "5">
          </BreakpointContent>
