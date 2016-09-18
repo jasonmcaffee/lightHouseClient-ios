@@ -6,14 +6,32 @@
 //  Copyright © 2016 Jason McAffee. All rights reserved.
 //
 
-//import Foundation
 import SwiftyJSON
 import Foundation
-//Response from generic makeHttpGetCall, etc.
+
+//Response from generic performHttpRequestWithJSONResponse, etc.
 typealias ServiceResponse = (JSON, ErrorType?) -> Void
+
+typealias RequestAndSession = (request: NSMutableURLRequest, session: NSURLSession);
 
 /**
  * All communication with the Hue Bridge API are done through this service.
+ * 
+ * TODO: handle error json
+ * [
+    {
+        "error": {
+            "type": 7,
+            "address": "/lights/12/state/bri",
+            "description": "invalid value, 2543 }, for parameter, bri"
+        }
+    },
+    {
+        "success": {
+            "/lights/12/state/on": true
+        }
+    }
+ ]
  *
  */
 class HueBridgeService: NSObject {
@@ -37,83 +55,88 @@ class HueBridgeService: NSObject {
         return self.bridgeUrl + path;
     }
     
-    
     /**
+     * Calls GET on the /api endpoint, retrieving the state of lights, groups, schedules, etc
      *
     */
     func getSystemState(callback: (SystemState) -> ()){
         let url = String(format: "%@/api/%@", bridgeUrl, userName);
         let systemState = SystemState();
         
-        makeHTTPGetRequest(url) { (json: JSON, error: ErrorType?) in
-            if let lightsJson = json["lights"].dictionary{
-                for(key, lightJson):(String, JSON) in lightsJson{
-                    
-                    let light = Light(key: key, json: lightJson.rawString());
-                    systemState.lightArray.append(light);
-                    
-                    let lightToJson = light.toJsonString();
-                    EventBus.singleton.notify("jsonData", data: lightToJson);
-                    
-                }
-            }else{
-                print("Error getting system state from Hue Bridge: " + error.debugDescription);
-            }
-            
+        let requestAndSession = createRequestAndSession(url);
+        setRequestAsJson(requestAndSession.request);
+        performHttpRequestWithJSONResponse(requestAndSession.request, session: requestAndSession.session, callback: { (json:JSON, error:ErrorType?) in
+            systemState.populateFromJson(json);
             callback(systemState);
-            
+            let systemStateJson = systemState.toJsonString();
+            EventBus.singleton.notify("jsonData", data: systemStateJson);
+        });
+    }
+    
+    /**
+     * Creates request and session objects used to perform http requests.
+    */
+    func createRequestAndSession(path: String) -> RequestAndSession{
+        let request = NSMutableURLRequest(URL: NSURL(string: path)!);
+        let session = NSURLSession.sharedSession();
+        return (request: request, session: session);
+    }
+    
+    /**
+     * Adds headers to accept and send JSON data.
+    */
+    func setRequestAsJson(request: NSMutableURLRequest){
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type");
+        request.addValue("application/json", forHTTPHeaderField: "Accept");
+    }
+    
+    /**
+     Converts response into a Swifty JSON object
+    */
+    func performHttpRequestWithJSONResponse(request: NSMutableURLRequest, session: NSURLSession, callback: ServiceResponse){
+        
+        performHttpRequest(request, session: session) { (data, response, error) in
+            let jsonResponse = JSON(data: data!);
+            callback(jsonResponse, error);
         }
     }
     
-    func makeHTTPGetRequest(path: String, callback:ServiceResponse){
-        let request = NSMutableURLRequest(URL: NSURL(string: path)!)
-        let session = NSURLSession.sharedSession()
-        //request.HTTPMethod = "GET"
-        
-        //let params = ["username":"username", "password":"password"] as Dictionary<String, String>
-        
-        //request.HTTPBody = try? NSJSONSerialization.dataWithJSONObject(params, options: [])
-        
-       // request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        //request.addValue("application/json", forHTTPHeaderField: "Accept")
-        
-        let task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
-            print("Response: \(response)");
-            let jsonResponse = JSON(data: data!);
-            callback(jsonResponse, error);
-        });
-        
+    /**
+     * asynchronously performs the http request, calling the responseHandler param once completed.
+    */
+    func performHttpRequest (request: NSMutableURLRequest, session: NSURLSession, responseHandler: (NSData?, NSURLResponse?, NSError?) ->()){
+        let task = session.dataTaskWithRequest(request, completionHandler: responseHandler);
         task.resume()
-        
     }
-    
-//    func makeHTTPGetRequest(path: String, callback:ServiceResponse){
-//        let url = NSURL(string: "http://express.heartrails.com/api/json?method=getPrefectures")
-//        let request = NSURLRequest(URL: url!)
-//        let jsonResponse: JSON;
-//        do{
-//            let data = try NSURLConnection.sendSynchronousRequest(request, returningResponse: nil)
-//            jsonResponse = JSON(data: data)
-//            print(jsonResponse)
-//            callback(jsonResponse, nil);
-//        }catch {
-//            print(error);
-//            print("error!!!!!JFJFJFJFJF");
-//            callback(nil, error);
-//        }
-//        
-//    }
-    
-//    func makeHTTPGetRequest(path: String, callback: ServiceResponse) {
-//        let request = NSMutableURLRequest(URL: NSURL(string: path)!)
-//        
-//        let session = NSURLSession.sharedSession()
-//        
-//        let task = session.dataTask(with: request, completionHandler: {data, response, error -> Void in
-//            let json:JSON = JSON(data: data!)
-//            callback(json, error)
-//        })
-//        task.resume()
-//    }
-    
 }
+
+
+
+
+
+
+
+//
+//func makeHTTPGetRequest(path: String, callback:ServiceResponse){
+//    let request = NSMutableURLRequest(URL: NSURL(string: path)!)
+//    let session = NSURLSession.sharedSession()
+//    
+//    //request.HTTPMethod = "GET"
+//    
+//    //let params = ["username":"username", "password":"password"] as Dictionary<String, String>
+//    
+//    //request.HTTPBody = try? NSJSONSerialization.dataWithJSONObject(params, options: [])
+//    
+//    // request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+//    //request.addValue("application/json", forHTTPHeaderField: "Accept")
+//    let task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
+//        print("Response: \(response)");
+//        let jsonResponse = JSON(data: data!);
+//        callback(jsonResponse, error);
+//    });
+//    
+//    task.resume()
+//}
+
+
+

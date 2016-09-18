@@ -7,15 +7,34 @@
 //
 
 import Foundation
+import SwiftyJSON
+import EVReflection
 
 /**
  * Represents the state of lights, groups, scenes etc. which is returned from the Hue Bridge /api call.
  */
-class SystemState: NSObject{
+class SystemState: EVObject{
     
     var lightArray: Array<Light>;
     
-    override init(){
+    required init(){
         lightArray = Array<Light>();
+    }
+    
+    func populateFromJson(stateJson: JSON){
+        if let lightsJson = stateJson["lights"].dictionary{
+            for(key, lightJson):(String, JSON) in lightsJson{
+                
+                let light = Light(key: key, json: lightJson.rawString());
+                self.lightArray.append(light);
+                
+                //let lightToJson = light.toJsonString();
+                //EventBus.singleton.notify("jsonData", data: lightToJson);
+                
+            }
+        }else{
+            print("Error getting system state from Hue Bridge: no lights found in json");
+        }
+
     }
 }
