@@ -52,7 +52,8 @@ class HueBridgeService: NSObject {
     }
     
     func buildApiUrl(path: String) -> String{
-        return self.bridgeUrl + path;
+        let url = String(format: "%@/api/%@/%@", bridgeUrl, userName, path);
+        return url;
     }
     
     /**
@@ -60,7 +61,8 @@ class HueBridgeService: NSObject {
      *
     */
     func getSystemState(callback: (SystemState) -> ()){
-        let url = String(format: "%@/api/%@", bridgeUrl, userName);
+        //let url = String(format: "%@/api/%@", bridgeUrl, userName);
+        let url = buildApiUrl("");
         let systemState = SystemState();
         
         let requestAndSession = createRequestAndSession(url);
@@ -74,12 +76,38 @@ class HueBridgeService: NSObject {
     }
     
     /**
+     * Sends the light json via PUT, so whatever state values this has should be reflected in reality after this
+     * call completes.
+    */
+    func setLightState(light:Light, callback: (Light)->()){
+        //{{hueBridgeUrl}}/api/{{bridgeUserName}}/lights/12/state
+        let path = String(format: "lights/%@/state", light.key!);
+        let url = buildApiUrl(path);
+        
+        let requestAndSession = createRequestAndSession(url);
+        setRequestAsJson(requestAndSession.request);
+        requestAndSession.request.HTTPMethod = "PUT";
+        
+        let jsonRequestBody = light.toJsonString();
+        setRequestBody(requestAndSession.request, body: jsonRequestBody);
+        
+        performHttpRequestWithJSONResponse(requestAndSession.request, session: requestAndSession.session) { (jsonResponse, error) in
+            EventBus.singleton.notify("jsonData", data: jsonResponse.rawString()!);
+        }
+        
+    }
+    
+    /**
      * Creates request and session objects used to perform http requests.
     */
     func createRequestAndSession(path: String) -> RequestAndSession{
         let request = NSMutableURLRequest(URL: NSURL(string: path)!);
         let session = NSURLSession.sharedSession();
         return (request: request, session: session);
+    }
+    
+    func setRequestBody(request: NSMutableURLRequest, body:String){
+        request.HTTPBody = body.dataUsingEncoding(NSUTF8StringEncoding);
     }
     
     /**

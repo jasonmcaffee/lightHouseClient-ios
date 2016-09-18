@@ -27,10 +27,6 @@ class SystemState: EVObject{
                 
                 let light = Light(key: key, json: lightJson.rawString());
                 self.lightArray.append(light);
-                
-                //let lightToJson = light.toJsonString();
-                //EventBus.singleton.notify("jsonData", data: lightToJson);
-                
             }
         }else{
             print("Error getting system state from Hue Bridge: no lights found in json");
