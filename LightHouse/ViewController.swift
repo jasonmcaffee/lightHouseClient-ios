@@ -34,8 +34,6 @@ class ViewController: UIViewController {
         HueBridgeService.singleton.getSystemState({ (lightArray: Array<Light>) in
             
         });
-        //self.debugTextView.text = "BUTTON";
-        //EventBus.singleton.notify("jsonData", data: "hi there");
         
     }
     
