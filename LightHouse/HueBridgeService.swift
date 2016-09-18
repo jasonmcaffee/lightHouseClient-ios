@@ -38,6 +38,9 @@ class HueBridgeService: NSObject {
     }
     
     
+    /**
+     *
+    */
     func getSystemState(callback: (SystemState) -> ()){
         let url = String(format: "%@/api/%@", bridgeUrl, userName);
         let systemState = SystemState();

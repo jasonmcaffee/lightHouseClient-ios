@@ -12,6 +12,7 @@ import EVReflection
 
 /**
  * Represents a hue light of some kind (bulb, led strip, go, etc)
+ * http://www.burgestrand.se/hue-api/api/lights/
  */
 class Light : EVObject{
     var key: String?; // "1"   "13"
