@@ -43,11 +43,12 @@ class LightSwitch: UIView {
         lightSwitch.backgroundColor = .blueColor();
         lightSwitch.addTarget(self, action: #selector(lightSwitchAction), forControlEvents: .TouchUpInside);
         
+        lightSwitch.setOn((light.state?.on)!, animated: true);
         addSubview(lightSwitch)
         
-        var label = UILabel(frame: CGRectMake(0, 0, 200, 50))
-        label.center = CGPointMake(160, 284)
-        label.textAlignment = NSTextAlignment.Center
+        var label = UILabel(frame: CGRectMake(0, 0, CGFloat(uiLabelWidth), CGFloat(uiLabelHeight)))
+        //label.center = CGPointMake(160, 284)
+        label.textAlignment = NSTextAlignment.Left
         label.text = "label " + light.name!;
         
         addSubview(label);
@@ -56,6 +57,9 @@ class LightSwitch: UIView {
     
     func lightSwitchAction(sender: UISwitch!) {
         print("Switch tapped")
+        self.light.state?.on = sender.on;
+        EventBus.singleton.notify("light model changed", data: self.light);
+        
     }
 
 }

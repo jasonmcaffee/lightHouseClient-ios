@@ -22,6 +22,7 @@ class ViewController: UIViewController {
         getSystemStateAndDrawUI();
         //debugging
         EventBus.singleton.register("jsonData", callback: self.handleJsonDataEvent);
+        EventBus.singleton.register("light model changed", callback: self.handleLightModelChangeEvent);
     }
     
     func getSystemStateAndDrawUI(){
@@ -29,20 +30,12 @@ class ViewController: UIViewController {
             self.createUILightSwitches(systemState.lightArray);
         });
     }
+    
     func createUILightSwitches(lights:Array<Light>){
-//        let button = UIButton(frame: CGRect(x: 100, y: 100, width: 100, height: 50))
-//        button.backgroundColor = .greenColor()
-//        button.setTitle("Test Button", forState: .Normal)
-//        button.addTarget(self, action: #selector(lightSwitchAction), forControlEvents: .TouchUpInside)
-//        
         var lastYForLightSwitch = 0;
         var lightSwitchHeight = 50;
         
         for light:Light in lights{
-//            let lightSwitch = UISwitch(frame: CGRect(x: 100, y: 100, width: 100, height: 50));
-//            lightSwitch.backgroundColor = .blueColor();
-//            lightSwitch.addTarget(self, action: #selector(lightSwitchAction), forControlEvents: .TouchUpInside);
-//            
             let lightSwitch = LightSwitch(light: light, frame: CGRect(x: 0, y: lastYForLightSwitch, width: 200, height: 50));
             
             self.view.addSubview(lightSwitch)
@@ -78,6 +71,14 @@ class ViewController: UIViewController {
                 self.debugTextView.text = self.debugTextView.text + "\n" + jsonString!;
             });
             
+        }
+    }
+    
+    func handleLightModelChangeEvent(data: AnyObject){
+        if let lightModel = data as AnyObject? as? Light?{
+            HueBridgeService.singleton.setLightState(lightModel!, callback: { (light: Light) in
+                
+            });
         }
     }
     

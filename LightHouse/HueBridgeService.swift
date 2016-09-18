@@ -88,8 +88,8 @@ class HueBridgeService: NSObject {
         setRequestAsJson(requestAndSession.request);
         requestAndSession.request.HTTPMethod = "PUT";
         
-        let jsonRequestBody = light.toJsonString();
-        setRequestBody(requestAndSession.request, body: jsonRequestBody);
+        let jsonRequestBody = light.state?.toJsonString();
+        setRequestBody(requestAndSession.request, body: jsonRequestBody!);
         
         performHttpRequestWithJSONResponse(requestAndSession.request, session: requestAndSession.session) { (jsonResponse, error) in
             EventBus.singleton.notify("jsonData", data: jsonResponse.rawString()!);
