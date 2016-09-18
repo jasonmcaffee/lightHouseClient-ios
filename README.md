@@ -30,3 +30,11 @@ cd directory/containing/podfile (project root)
 pod install
 ```
 
+### Phone
+To run from xcode and launch app on phone:
+Connect phone to computer
+Select phone from device list in xcode. e.g. "Jason's iPhone"
+Run in xcode
+You will get an error that app couldn't be launched, and to trust the developer on phone
+System Settings -> General -> Device Management -> Developer App -> jasonlmcaffee@gmail.com -> Trust
+
