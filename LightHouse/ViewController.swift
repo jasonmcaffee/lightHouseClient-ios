@@ -14,9 +14,12 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var getStateButton: UIButton!
     
+    @IBOutlet weak var debugTextView: UITextView!
+    
     override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        super.viewDidLoad();
+        self.debugTextView.text = "";
+        EventBus.singleton.register("jsonData", callback: self.handleJsonDataEvent);
     }
 
     override func didReceiveMemoryWarning() {
@@ -28,6 +31,22 @@ class ViewController: UIViewController {
 
     @IBAction func getStateButtonTouched(sender: UIButton) {
         print("BUTTON PRESSED");
+        HueBridgeService.singleton.getSystemState({ (lightArray: Array<Light>) in
+            
+        });
+        //self.debugTextView.text = "BUTTON";
+        //EventBus.singleton.notify("jsonData", data: "hi there");
+        
+    }
+    
+    
+    func handleJsonDataEvent(data: AnyObject){
+        if let jsonString = data as AnyObject? as? String?{
+            dispatch_sync(dispatch_get_main_queue(), {
+                self.debugTextView.text = self.debugTextView.text + "\n" + jsonString!;
+            });
+            
+        }
     }
 }
 

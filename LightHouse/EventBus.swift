@@ -22,7 +22,7 @@ class EventBus: NSObject{
     
     var callbackId = 0;
     //EventBus.bus is how singletons are done in swift.
-    static let bus = EventBus();
+    static let singleton = EventBus();
     
     //This prevents others from using the default '()' initializer for this class.
     override init(){}

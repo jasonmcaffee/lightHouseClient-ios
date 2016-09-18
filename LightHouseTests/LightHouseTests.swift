@@ -29,7 +29,7 @@ class LightHouseTests: XCTestCase {
     func testEventBus() {
         var wasCalled: Bool = false;
         
-        let callbackId = EventBus.bus.register("test1", callback: { (data: AnyObject) -> Void in
+        let callbackId = EventBus.singleton.register("test1", callback: { (data: AnyObject) -> Void in
             guard let data = data as? [String:AnyObject] else{ return }
             wasCalled = true;
             guard let value = data["myKey"] as? Int else {return};
@@ -37,13 +37,13 @@ class LightHouseTests: XCTestCase {
             
         });
         
-        EventBus.bus.notify("test1", data:["myKey": 123]);
+        EventBus.singleton.notify("test1", data:["myKey": 123]);
         
         XCTAssert(wasCalled == true);
         
         wasCalled = false;
-        EventBus.bus.unregister(callbackId);
-        EventBus.bus.notify("test1", data:["myKey": 123]);
+        EventBus.singleton.unregister(callbackId);
+        EventBus.singleton.notify("test1", data:["myKey": 123]);
         XCTAssert(wasCalled == false);
         
     }

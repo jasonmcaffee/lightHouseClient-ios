@@ -33,25 +33,31 @@ class HueBridgeService: NSObject {
         return self.bridgeUrl + path;
     }
     
-    func getSystemState(callback: (JSON, ErrorType?) -> ()){
+    func getSystemState(callback: (Array<Light>) -> ()){
         //let url = String(format: "%@/api/%@", bridgeUrl, userName);
         let url:String = buildApiUrl("/api") + "/" + userName;
         //makeHTTPGetRequest(url, callback: callback);
         
         makeHTTPGetRequest(url) { (json: JSON, error: ErrorType?) in
+            var lightArray: Array<Light> = Array<Light>();
+            
             if let lightsJson = json["lights"].dictionary{
                 
                 for(key, lightJson):(String, JSON) in lightsJson{
-                    print("KEY IS : " + key);
-                    let light = Light(key: key, json: lightJson);
-                    print("light uniqueid is " + light.uniqueid!);
+                    
+                    let light = Light(key: key, json: lightJson.rawString());
+                    lightArray.append(light);
+                    
+                    let lightToJson = light.toJsonString();
+                    //print("light json is " + lightToJson);
+                    EventBus.singleton.notify("jsonData", data: lightToJson);
                     
                 }
             }else{
                 print("ERROOROROR: " + error.debugDescription);
             }
             
-            callback(json, error);
+            callback(lightArray);
             
         }
     }

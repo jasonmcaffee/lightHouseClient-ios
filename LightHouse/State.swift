@@ -8,8 +8,9 @@
 
 import Foundation
 import SwiftyJSON
+import EVReflection
 
-class State : NSObject{
+class State : EVObject{
     
 //    "on": true,
 //    "bri": 1,
@@ -37,6 +38,9 @@ class State : NSObject{
     init(json:JSON){
         super.init();
         popluateFromJSON(json);
+    }
+    required init(){
+        
     }
     
     func popluateFromJSON(json:JSON){
