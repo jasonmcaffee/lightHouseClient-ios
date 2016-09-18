@@ -9,12 +9,16 @@
 //import Foundation
 import SwiftyJSON
 import Foundation
-
+//Response from generic makeHttpGetCall, etc.
 typealias ServiceResponse = (JSON, ErrorType?) -> Void
 
+/**
+ * All communication with the Hue Bridge API are done through this service.
+ *
+ */
 class HueBridgeService: NSObject {
     
-    let bridgeUrl: String;
+    let bridgeUrl: String; //http://192.168.1.118
     let userName: String = "J6sizwN7qJz7lDNGXKOschliq2ft-7Q85A-sq35Z";
     
     static let singleton = HueBridgeService();
@@ -33,31 +37,27 @@ class HueBridgeService: NSObject {
         return self.bridgeUrl + path;
     }
     
-    func getSystemState(callback: (Array<Light>) -> ()){
-        //let url = String(format: "%@/api/%@", bridgeUrl, userName);
-        let url:String = buildApiUrl("/api") + "/" + userName;
-        //makeHTTPGetRequest(url, callback: callback);
+    
+    func getSystemState(callback: (SystemState) -> ()){
+        let url = String(format: "%@/api/%@", bridgeUrl, userName);
+        let systemState = SystemState();
         
         makeHTTPGetRequest(url) { (json: JSON, error: ErrorType?) in
-            var lightArray: Array<Light> = Array<Light>();
-            
             if let lightsJson = json["lights"].dictionary{
-                
                 for(key, lightJson):(String, JSON) in lightsJson{
                     
                     let light = Light(key: key, json: lightJson.rawString());
-                    lightArray.append(light);
+                    systemState.lightArray.append(light);
                     
                     let lightToJson = light.toJsonString();
-                    //print("light json is " + lightToJson);
                     EventBus.singleton.notify("jsonData", data: lightToJson);
                     
                 }
             }else{
-                print("ERROOROROR: " + error.debugDescription);
+                print("Error getting system state from Hue Bridge: " + error.debugDescription);
             }
             
-            callback(lightArray);
+            callback(systemState);
             
         }
     }

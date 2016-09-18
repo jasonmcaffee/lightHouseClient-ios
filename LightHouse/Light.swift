@@ -10,6 +10,9 @@ import Foundation
 import SwiftyJSON
 import EVReflection
 
+/**
+ * Represents a hue light of some kind (bulb, led strip, go, etc)
+ */
 class Light : EVObject{
     var key: String?; // "1"   "13"
     var name: String?; //Hue color lamp 1
@@ -19,36 +22,19 @@ class Light : EVObject{
     var manufacturername: String?; //Philips
     var swversion: String?; //5.38.1.14919
     
+    //the current state of the light (on, coordinates, etc)
     var state: State?;
     
-
-    
+    /**
+     * @param key - id given by the hue bridge. sent when creating groups.
+     * @param json - the json string representing the light. all json keys should match property names
+     */
     init(key: String, json:String?){
         super.init();
         self.key = key;
         let jsonDict = EVReflection.dictionaryFromJson(json)
         EVReflection.setPropertiesfromDictionary(jsonDict, anyObject: self, conversionOptions: .DefaultDeserialize)
-        
     }
     
-    
-    required init(){
-        
-    }
-    
-//    func populateFromJSON(key: String, json: JSON){
-//        self.key = key;
-//        self.name = json["name"].string;
-//        self.uniqueid = json["uniqueid"].string;
-//        self.type = json["type"].string;
-//        self.manufacturername = json["manufacturername"].string;
-//        self.swversion = json["swversion"].string;
-//        
-//        self.state = State(json: json["state"]);
-//    }
-    
-    //    init(key: String, json: JSON){
-    //        super.init();
-    //        populateFromJSON(key, json: json);
-    //    }
+    required init(){}
 }

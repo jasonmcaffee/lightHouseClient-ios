@@ -25,7 +25,7 @@ class HueBridgeServiceTests: XCTestCase {
     func testGetStatus() {
         let expectation = expectationWithDescription("SomeService does stuff and runs the callback closure");
         
-        HueBridgeService.singleton.getSystemState({ (lightArray: Array<Light>) ->() in
+        HueBridgeService.singleton.getSystemState({ (systemState: SystemState) ->() in
             print("data received!");
             expectation.fulfill();
         });

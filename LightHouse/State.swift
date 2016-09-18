@@ -10,21 +10,10 @@ import Foundation
 import SwiftyJSON
 import EVReflection
 
+/**
+ * State of a Hue Light (bulb, go, etc)
+ */
 class State : EVObject{
-    
-//    "on": true,
-//    "bri": 1,
-//    "hue": 3271,
-//    "sat": 244,
-//    "effect": "none",
-//    "xy": [
-//    0.6307,
-//    0.3482
-//    ],
-//    "ct": 153,
-//    "alert": "none",
-//    "colormode": "hs",
-//    "reachable": true
     var on  :Bool?;         //true
     var bri :Int?;          //1
     var hue :Int?;          //3271
@@ -34,24 +23,7 @@ class State : EVObject{
     var ct :Int?;           //153
     var alert :String?;     //none
     var colormode: String?; //hs
+    var reachable: Bool?;// true
     
-    init(json:JSON){
-        super.init();
-        popluateFromJSON(json);
-    }
-    required init(){
-        
-    }
-    
-    func popluateFromJSON(json:JSON){
-        self.on = json["on"].bool;
-        self.bri = json["bri"].int;
-        self.hue = json["hue"].int;
-        self.sat = json["sat"].int;
-        self.effect = json["effect"].string;
-        self.xy = json["xy"].arrayValue.map { $0.double!}
-        self.ct = json["ct"].int;
-        self.alert = json["alert"].string;
-        self.colormode = json["colormode"].string;
-    }
+    required init(){}
 }

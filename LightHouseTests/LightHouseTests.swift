@@ -20,39 +20,9 @@ class LightHouseTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
-    
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-    
+
     func testEventBus() {
-        var wasCalled: Bool = false;
-        
-        let callbackId = EventBus.singleton.register("test1", callback: { (data: AnyObject) -> Void in
-            guard let data = data as? [String:AnyObject] else{ return }
-            wasCalled = true;
-            guard let value = data["myKey"] as? Int else {return};
-            XCTAssert(value == 123)
-            
-        });
-        
-        EventBus.singleton.notify("test1", data:["myKey": 123]);
-        
-        XCTAssert(wasCalled == true);
-        
-        wasCalled = false;
-        EventBus.singleton.unregister(callbackId);
-        EventBus.singleton.notify("test1", data:["myKey": 123]);
-        XCTAssert(wasCalled == false);
-        
+                
     }
-    
-//    func testPerformanceExample() {
-//        // This is an example of a performance test case.
-//        self.measureBlock {
-//            // Put the code you want to measure the time of here.
-//        }
-//    }
     
 }
