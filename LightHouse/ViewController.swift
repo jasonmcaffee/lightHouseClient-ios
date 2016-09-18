@@ -32,16 +32,19 @@ class ViewController: UIViewController {
     }
     
     func createUILightSwitches(lights:Array<Light>){
-        var lastYForLightSwitch = 0;
-        var lightSwitchHeight = 50;
+        dispatch_sync(dispatch_get_main_queue(), {
         
-        for light:Light in lights{
-            let lightSwitch = LightSwitch(light: light, frame: CGRect(x: 0, y: lastYForLightSwitch, width: 200, height: 50));
+            var lastYForLightSwitch = 0;
+            var lightSwitchHeight = 50;
+        
+            for light:Light in lights{
+                let lightSwitch = LightSwitch(light: light, frame: CGRect(x: 0, y: lastYForLightSwitch, width: 200, height: 50));
             
-            self.view.addSubview(lightSwitch)
+                self.view.addSubview(lightSwitch)
             
-            lastYForLightSwitch += lightSwitchHeight;
-        }
+                lastYForLightSwitch += lightSwitchHeight;
+            }
+        });
         
     }
     
