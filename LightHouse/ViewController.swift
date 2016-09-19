@@ -12,44 +12,40 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var getStateButton: UIButton!
     @IBOutlet weak var debugTextView: UITextView!
+    //@IBOutlet weak var toggleLightSwitch: UISwitch!
     
-    @IBOutlet weak var toggleLightSwitch: UISwitch!
+    //displays state of all lights
+    var lightSwitchesScrollView: LightSwitchesScrollView?;
+    
     override func viewDidLoad() {
         super.viewDidLoad();
         
         self.debugTextView.text = "";
         
         getSystemStateAndDrawUI();
-        //debugging
+        
         EventBus.singleton.register("jsonData", callback: self.handleJsonDataEvent);
         EventBus.singleton.register("light model changed", callback: self.handleLightModelChangeEvent);
     }
     
+    /**
+     * asynchronously calls the Hue Bridge to get the state of all bulbs, groups, etc.
+     * Once system state is retrieved, paints the screen.
+    */
     func getSystemStateAndDrawUI(){
         HueBridgeService.singleton.getSystemState({ (systemState: SystemState) in
-            self.createUILightSwitches(systemState.lightArray);
+            self.createLightSwitchesScrollView(systemState.lightArray);
         });
     }
     
-    func createUILightSwitches(lights:Array<Light>){
+    /**
+     * Creates and attaches a LightSwitchesScrollView view which displays state of all lights.
+    */
+    func createLightSwitchesScrollView(lights:Array<Light>){
         dispatch_sync(dispatch_get_main_queue(), {
-        
-            var lastYForLightSwitch = 0;
-            var lightSwitchHeight = 50;
-        
-            for light:Light in lights{
-                let lightSwitch = LightSwitch(light: light, frame: CGRect(x: 0, y: lastYForLightSwitch, width: 200, height: 50));
-            
-                self.view.addSubview(lightSwitch)
-            
-                lastYForLightSwitch += lightSwitchHeight;
-            }
+            self.lightSwitchesScrollView = LightSwitchesScrollView(lights: lights, frame: self.view.bounds);
+            self.view.addSubview(self.lightSwitchesScrollView!);
         });
-        
-    }
-    
-    func lightSwitchAction(sender: UIButton!) {
-        print("Switch tapped")
     }
 
     /**
@@ -59,10 +55,6 @@ class ViewController: UIViewController {
         HueBridgeService.singleton.getSystemState({ (systemState: SystemState) in
             
         });
-    }
-    
-    @IBAction func toggleLightSwitchChanged(sender: AnyObject) {
-        
     }
     
     /**
@@ -77,6 +69,10 @@ class ViewController: UIViewController {
         }
     }
     
+    /**
+     * When a light model changes (e.g. turned off, color change) we need to call the bridge service, sending it
+     * the desired state, so that state can be reflected in the real world.
+    */
     func handleLightModelChangeEvent(data: AnyObject){
         if let lightModel = data as AnyObject? as? Light?{
             HueBridgeService.singleton.setLightState(lightModel!, callback: { (light: Light) in

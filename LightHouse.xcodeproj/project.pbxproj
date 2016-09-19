@@ -23,6 +23,8 @@
 		4DD232B71D8E41A600DBB44D /* SystemState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD232B61D8E41A600DBB44D /* SystemState.swift */; };
 		4DD232B91D8E457400DBB44D /* EventBusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD232B81D8E457400DBB44D /* EventBusTests.swift */; };
 		4DD232BF1D8F19DA00DBB44D /* LightSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD232BE1D8F19DA00DBB44D /* LightSwitch.swift */; };
+		4DD232C51D8F590900DBB44D /* bg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4DD232C41D8F590900DBB44D /* bg.jpg */; };
+		4DD232C91D8F609000DBB44D /* LightSwitchesScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD232C81D8F609000DBB44D /* LightSwitchesScrollView.swift */; };
 		A125E2255B36B8B667FC5517 /* Pods_LightHouseTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B9FCAB3C07301835B180F9D /* Pods_LightHouseTests.framework */; };
 		D851C9E5324BF3380ED4A1F6 /* Pods_LightHouse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24419AE8E0A73BB528002769 /* Pods_LightHouse.framework */; };
 		F07C8B08409B964E262D503B /* Pods_LightHouseUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F95C597E5A5EEF299BFA9CB /* Pods_LightHouseUITests.framework */; };
@@ -71,6 +73,8 @@
 		4DD232B61D8E41A600DBB44D /* SystemState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemState.swift; sourceTree = "<group>"; };
 		4DD232B81D8E457400DBB44D /* EventBusTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventBusTests.swift; sourceTree = "<group>"; };
 		4DD232BE1D8F19DA00DBB44D /* LightSwitch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightSwitch.swift; sourceTree = "<group>"; };
+		4DD232C41D8F590900DBB44D /* bg.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bg.jpg; sourceTree = "<group>"; };
+		4DD232C81D8F609000DBB44D /* LightSwitchesScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightSwitchesScrollView.swift; sourceTree = "<group>"; };
 		6B9FCAB3C07301835B180F9D /* Pods_LightHouseTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LightHouseTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6F95C597E5A5EEF299BFA9CB /* Pods_LightHouseUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LightHouseUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8744DABBA3C6640D0C7184C4 /* Pods-LightHouseTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LightHouseTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LightHouseTests/Pods-LightHouseTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -120,6 +124,7 @@
 		4D991F091D8DC68E00ED149A = {
 			isa = PBXGroup;
 			children = (
+				4DD232C01D8F573100DBB44D /* assets */,
 				4DD232B41D8E38C300DBB44D /* README.md */,
 				4D991F141D8DC68E00ED149A /* LightHouse */,
 				4D991F291D8DC68E00ED149A /* LightHouseTests */,
@@ -215,8 +220,25 @@
 			isa = PBXGroup;
 			children = (
 				4DD232BE1D8F19DA00DBB44D /* LightSwitch.swift */,
+				4DD232C81D8F609000DBB44D /* LightSwitchesScrollView.swift */,
 			);
 			name = components;
+			sourceTree = "<group>";
+		};
+		4DD232C01D8F573100DBB44D /* assets */ = {
+			isa = PBXGroup;
+			children = (
+				4DD232C11D8F573D00DBB44D /* images */,
+			);
+			name = assets;
+			sourceTree = "<group>";
+		};
+		4DD232C11D8F573D00DBB44D /* images */ = {
+			isa = PBXGroup;
+			children = (
+				4DD232C41D8F590900DBB44D /* bg.jpg */,
+			);
+			name = images;
 			sourceTree = "<group>";
 		};
 		899EB65637832B11242B786E /* Pods */ = {
@@ -347,6 +369,7 @@
 			files = (
 				4D991F201D8DC68E00ED149A /* LaunchScreen.storyboard in Resources */,
 				4D991F1D1D8DC68E00ED149A /* Assets.xcassets in Resources */,
+				4DD232C51D8F590900DBB44D /* bg.jpg in Resources */,
 				4D991F1B1D8DC68E00ED149A /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -495,6 +518,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4DD232C91D8F609000DBB44D /* LightSwitchesScrollView.swift in Sources */,
 				4D991F181D8DC68E00ED149A /* ViewController.swift in Sources */,
 				4DD232B11D8DF90600DBB44D /* Light.swift in Sources */,
 				4DD232B71D8E41A600DBB44D /* SystemState.swift in Sources */,
