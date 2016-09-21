@@ -15,10 +15,6 @@ class LightSwitch: UIView {
 
     var light:Light = Light();
     
-    var uiSwitchWidth = 100;
-    var uiSwitchHeight = 50;
-    var uiLabelWidth = 100;
-    var uiLabelHeight = 50;
     
     /*
     // Only override drawRect: if you perform custom drawing.
@@ -33,23 +29,34 @@ class LightSwitch: UIView {
     
     init(light: Light, frame: CGRect){
         super.init(frame: frame);
+       // self.userInteractionEnabled = false;
         setLightState(light);
     }
     
     func setLightState(light:Light){
         self.light = light;
         
-        var lightSwitch = UISwitch(frame: CGRect(x: uiLabelWidth, y: 0, width: uiSwitchWidth, height: uiSwitchHeight));
+        var lightSwitch = UISwitch(frame: CGRect(
+            x: Style.LightSwitch.labelWidth,
+            y: 0,
+            width: Style.LightSwitch.switchWidth,
+            height: Style.LightSwitch.switchHeight));
+        
         lightSwitch.backgroundColor = .blueColor();
+        
         lightSwitch.addTarget(self, action: #selector(lightSwitchAction), forControlEvents: .TouchUpInside);
         
         lightSwitch.setOn((light.state?.on)!, animated: true);
         addSubview(lightSwitch)
         
-        var label = UILabel(frame: CGRectMake(0, 0, CGFloat(uiLabelWidth), CGFloat(uiLabelHeight)))
+        var label = UILabel(frame: CGRectMake(
+            0,
+            0,
+            CGFloat(Style.LightSwitch.labelWidth),
+            CGFloat(Style.LightSwitch.labelHeight)))
         //label.center = CGPointMake(160, 284)
         label.textAlignment = NSTextAlignment.Left
-        label.text = "label " + light.name!;
+        label.text = light.name!;
         
         addSubview(label);
 
@@ -61,5 +68,16 @@ class LightSwitch: UIView {
         EventBus.singleton.notify("light model changed", data: self.light);
         
     }
+    
+//    override func pointInside(point: CGPoint, withEvent event: UIEvent?) -> Bool {
+//        print("LightSwitch.pointInside called.");
+//        for subview in self.subviews {
+//            let hitTestResult = subview.hitTest(point, withEvent: event);
+//            if ( hitTestResult != nil){
+//                return true;
+//            }
+//        }
+//        return false
+//    }
 
 }

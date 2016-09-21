@@ -10,9 +10,8 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    @IBOutlet weak var getStateButton: UIButton!
-    @IBOutlet weak var debugTextView: UITextView!
-    //@IBOutlet weak var toggleLightSwitch: UISwitch!
+    //@IBOutlet weak var getStateButton: UIButton!
+    //@IBOutlet weak var debugTextView: UITextView!
     
     //displays state of all lights
     var lightSwitchesScrollView: LightSwitchesScrollView?;
@@ -20,8 +19,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad();
         
-        self.debugTextView.text = "";
-        
+        //self.debugTextView.text = "";
+       // self.view.userInteractionEnabled = false;
         getSystemStateAndDrawUI();
         
         EventBus.singleton.register("jsonData", callback: self.handleJsonDataEvent);
@@ -33,9 +32,14 @@ class ViewController: UIViewController {
      * Once system state is retrieved, paints the screen.
     */
     func getSystemStateAndDrawUI(){
-        HueBridgeService.singleton.getSystemState({ (systemState: SystemState) in
-            self.createLightSwitchesScrollView(systemState.lightArray);
-        });
+        //view.userInteractionEnabled = true;
+        var testView = TestView(frame: view.frame);
+        
+        self.view.addSubview(testView);
+        //self.view.bringSubviewToFront(testView);
+//        HueBridgeService.singleton.getSystemState({ (systemState: SystemState) in
+//            self.createLightSwitchesScrollView(systemState.lightArray);
+//        });
     }
     
     /**
@@ -45,17 +49,22 @@ class ViewController: UIViewController {
         dispatch_sync(dispatch_get_main_queue(), {
             self.lightSwitchesScrollView = LightSwitchesScrollView(lights: lights, frame: self.view.bounds);
             self.view.addSubview(self.lightSwitchesScrollView!);
+            
         });
+    }
+    
+    func lightSwitchAction(){
+        
     }
 
     /**
      * Gets the state from the Hue Bridge (/api endpoint)
     */
-    @IBAction func getStateButtonTouched(sender: UIButton) {
-        HueBridgeService.singleton.getSystemState({ (systemState: SystemState) in
-            
-        });
-    }
+//    @IBAction func getStateButtonTouched(sender: UIButton) {
+//        HueBridgeService.singleton.getSystemState({ (systemState: SystemState) in
+//            
+//        });
+//    }
     
     /**
      * for debugging purposes. displays received json data in a text view.
@@ -63,7 +72,7 @@ class ViewController: UIViewController {
     func handleJsonDataEvent(data: AnyObject){
         if let jsonString = data as AnyObject? as? String?{
             dispatch_sync(dispatch_get_main_queue(), {
-                self.debugTextView.text = self.debugTextView.text + "\n" + jsonString!;
+                //self.debugTextView.text = self.debugTextView.text + "\n" + jsonString!;
             });
             
         }
@@ -85,5 +94,7 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    
 }
 

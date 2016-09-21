@@ -23,10 +23,11 @@ class LightSwitchesScrollView: UIView {
     
     init(lights: Array<Light>, frame: CGRect){
         super.init(frame: frame);
-        
+        //self.userInteractionEnabled = false;
         self.createScrollView();
         self.createUILightSwitches(lights);
     }
+    
     
     /**
      * Creates a UIScrollView component which takes up the entire area of this view.
@@ -57,18 +58,32 @@ class LightSwitchesScrollView: UIView {
     */
     func createUILightSwitches(lights:Array<Light>){
             var lastYForLightSwitch = 10;
-            var lightSwitchHeight = 50;
             
             for light:Light in lights{
-                let lightSwitch = LightSwitch(light: light, frame: CGRect(x: 0, y: lastYForLightSwitch, width: 200, height: 50));
+                let lightSwitch = LightSwitch(light: light, frame: CGRect(
+                    x: 0,
+                    y: lastYForLightSwitch,
+                    width: 200,
+                    height: 50));
                 
                 self.scrollView!.addSubview(lightSwitch);
                 
-                lastYForLightSwitch += lightSwitchHeight;
+                lastYForLightSwitch += Style.LightSwitch.switchHeight;
             }
             
             self.resizeScrollViewContentSize();
     }
+    
+//    override func pointInside(point: CGPoint, withEvent event: UIEvent?) -> Bool {
+//        print("LightSwitchesScrollView.pointInside called")
+//        
+//        for subview in self.subviews {
+//            if (subview.hitTest(point, withEvent: event) != nil){
+//                return true;
+//            }
+//        }
+//        return false
+//    }
 
 }
 
