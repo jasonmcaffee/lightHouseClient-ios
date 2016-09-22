@@ -103,10 +103,11 @@ class HSBColorPicker : UIControl {
     }
     
     func touchedColor(gestureRecognizer: UILongPressGestureRecognizer){
-        print("touch hsb color picker")
+        //print("touch hsb color picker")
         let point = gestureRecognizer.locationInView(self)
         let color = getColorAtPoint(point)
         
+        EventBus.singleton.notify(EventNames.HsbColorPickerColorSelected.rawValue, data: color);
         self.delegate?.HSBColorColorPickerTouched(self, color: color, point: point, state:gestureRecognizer.state)
     }
 }
