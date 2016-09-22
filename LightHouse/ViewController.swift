@@ -21,10 +21,14 @@ class ViewController: UIViewController {
         
         //self.debugTextView.text = "";
        // self.view.userInteractionEnabled = false;
-        getSystemStateAndDrawUI();
-        
+        //getSystemStateAndDrawUI();
+        //showModal();
         EventBus.singleton.register("jsonData", callback: self.handleJsonDataEvent);
         EventBus.singleton.register("light model changed", callback: self.handleLightModelChangeEvent);
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        showModal();
     }
     
     /**
@@ -88,6 +92,22 @@ class ViewController: UIViewController {
                 
             });
         }
+    }
+    
+    func showModal(){
+        let modalView = UIView(frame: CGRect(
+            x: 0,
+            y: 0,
+            width: 200,
+            height: 200
+            ));
+        modalView.backgroundColor = UIColor(hue: CGFloat(2), saturation: CGFloat(100), brightness: CGFloat(100), alpha: CGFloat(1));
+        
+        let modalViewController = ModalViewController()
+        modalViewController.setTheModalView(modalView);
+        
+        modalViewController.modalPresentationStyle = .OverCurrentContext
+        presentViewController(modalViewController, animated: true, completion: nil)
     }
     
     override func didReceiveMemoryWarning() {

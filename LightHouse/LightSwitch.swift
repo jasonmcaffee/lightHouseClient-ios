@@ -12,28 +12,22 @@ import UIKit
  https://developer.apple.com/library/content/referencelibrary/GettingStarted/DevelopiOSAppsSwift/Lesson5.html
  */
 class LightSwitch: UIView {
-
+    var selectedUIColor = UIView()
     var light:Light = Light();
-    
-    
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect) {
-        // Drawing code
-    }
-    */
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder);
     }
     
     init(light: Light, frame: CGRect){
         super.init(frame: frame);
-       // self.userInteractionEnabled = false;
-        setLightState(light);
+        updateUIToReflectLightModel(light);
     }
     
-    func setLightState(light:Light){
+    /**
+     * Uses the passed in light model parameter to set self.light, and have the light model be reflected in the UI.
+    */
+    func updateUIToReflectLightModel(light:Light){
         self.light = light;
         
         var lightSwitch = UISwitch(frame: CGRect(
@@ -59,25 +53,31 @@ class LightSwitch: UIView {
         label.text = light.name!;
         
         addSubview(label);
-
+        
+        
+        selectedUIColor = UIView(frame: CGRect(
+            x: 0,
+            y: 290,
+            width: 200,
+            height: 20
+            ));
+        
+        selectedUIColor.backgroundColor = UIColor(hue: CGFloat(2), saturation: CGFloat(100), brightness: CGFloat(100), alpha: CGFloat(1));
+        self.addSubview(selectedUIColor);
+        
     }
     
     func lightSwitchAction(sender: UISwitch!) {
         print("Switch tapped")
         self.light.state?.on = sender.on;
         EventBus.singleton.notify("light model changed", data: self.light);
-        
     }
     
-//    override func pointInside(point: CGPoint, withEvent event: UIEvent?) -> Bool {
-//        print("LightSwitch.pointInside called.");
-//        for subview in self.subviews {
-//            let hitTestResult = subview.hitTest(point, withEvent: event);
-//            if ( hitTestResult != nil){
-//                return true;
-//            }
-//        }
-//        return false
-//    }
+    func handleHsbColorPickerChange(data:AnyObject){
+        print("handleHsbColorPickerChange called");
+        let color = data as! UIColor;
+        selectedUIColor.backgroundColor = color;
+    }
+    
 
 }

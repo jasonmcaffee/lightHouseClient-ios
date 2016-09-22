@@ -15,7 +15,7 @@ typealias Callback = (data: AnyObject) -> Void;
 typealias CallbackContainer = (id:Int, callback:Callback);
 
 enum EventNames : String{
-    case HsbColorPickerColorSelected = "HsbColorPickerColorSelected"
+    case HsbColorPickerColorSelected
 }
 /**
  * The primary means of communication between classes/modules is an event bus, where modules can register callbacks

@@ -28,6 +28,7 @@
 		4DD232CB1D8F7BD000DBB44D /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD232CA1D8F7BD000DBB44D /* Style.swift */; };
 		4DD232CD1D90766B00DBB44D /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD232CC1D90766B00DBB44D /* TestView.swift */; };
 		4DD232CF1D919A1C00DBB44D /* HSBColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD232CE1D919A1C00DBB44D /* HSBColorPicker.swift */; };
+		4DD232D31D93694800DBB44D /* ModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD232D21D93694800DBB44D /* ModalViewController.swift */; };
 		A125E2255B36B8B667FC5517 /* Pods_LightHouseTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B9FCAB3C07301835B180F9D /* Pods_LightHouseTests.framework */; };
 		D851C9E5324BF3380ED4A1F6 /* Pods_LightHouse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24419AE8E0A73BB528002769 /* Pods_LightHouse.framework */; };
 		F07C8B08409B964E262D503B /* Pods_LightHouseUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F95C597E5A5EEF299BFA9CB /* Pods_LightHouseUITests.framework */; };
@@ -81,6 +82,7 @@
 		4DD232CA1D8F7BD000DBB44D /* Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Style.swift; sourceTree = "<group>"; };
 		4DD232CC1D90766B00DBB44D /* TestView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
 		4DD232CE1D919A1C00DBB44D /* HSBColorPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSBColorPicker.swift; sourceTree = "<group>"; };
+		4DD232D21D93694800DBB44D /* ModalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModalViewController.swift; sourceTree = "<group>"; };
 		6B9FCAB3C07301835B180F9D /* Pods_LightHouseTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LightHouseTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6F95C597E5A5EEF299BFA9CB /* Pods_LightHouseUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LightHouseUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8744DABBA3C6640D0C7184C4 /* Pods-LightHouseTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LightHouseTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LightHouseTests/Pods-LightHouseTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -217,6 +219,7 @@
 		4DD232BA1D8F14F900DBB44D /* ui */ = {
 			isa = PBXGroup;
 			children = (
+				4DD232D01D93691000DBB44D /* controllers */,
 				4DD232BB1D8F190F00DBB44D /* components */,
 				4DD232CA1D8F7BD000DBB44D /* Style.swift */,
 			);
@@ -248,6 +251,14 @@
 				4DD232C41D8F590900DBB44D /* bg.jpg */,
 			);
 			name = images;
+			sourceTree = "<group>";
+		};
+		4DD232D01D93691000DBB44D /* controllers */ = {
+			isa = PBXGroup;
+			children = (
+				4DD232D21D93694800DBB44D /* ModalViewController.swift */,
+			);
+			name = controllers;
 			sourceTree = "<group>";
 		};
 		899EB65637832B11242B786E /* Pods */ = {
@@ -533,6 +544,7 @@
 				4D991F181D8DC68E00ED149A /* ViewController.swift in Sources */,
 				4DD232B11D8DF90600DBB44D /* Light.swift in Sources */,
 				4DD232B71D8E41A600DBB44D /* SystemState.swift in Sources */,
+				4DD232D31D93694800DBB44D /* ModalViewController.swift in Sources */,
 				4DD232AB1D8DD59000DBB44D /* EventBus.swift in Sources */,
 				4DD232B51D8E38C300DBB44D /* README.md in Sources */,
 				4DD232A91D8DCB3000DBB44D /* HueBridgeService.swift in Sources */,
