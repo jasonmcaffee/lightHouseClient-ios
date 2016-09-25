@@ -19,16 +19,22 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad();
         
-        //self.debugTextView.text = "";
-       // self.view.userInteractionEnabled = false;
-        //getSystemStateAndDrawUI();
-        //showModal();
-        EventBus.singleton.register("jsonData", callback: self.handleJsonDataEvent);
-        EventBus.singleton.register("light model changed", callback: self.handleLightModelChangeEvent);
+        getSystemStateAndDrawUI();
+        
+        EventBus.singleton.register(
+            EventNames.JsonData.rawValue,
+            callback: self.handleJsonDataEvent);
+        
+        EventBus.singleton.register(
+            EventNames.LightModelChanged.rawValue,
+            callback: self.handleLightModelChangeEvent);
     }
     
+    /**
+     Showing the modal on viewDidLoad results in an error. have to display after appear is fired.
+    */
     override func viewDidAppear(animated: Bool) {
-        showModal();
+        //showModal();
     }
     
     /**
@@ -36,14 +42,12 @@ class ViewController: UIViewController {
      * Once system state is retrieved, paints the screen.
     */
     func getSystemStateAndDrawUI(){
-        //view.userInteractionEnabled = true;
-        var testView = TestView(frame: view.frame);
+//        var testView = TestView(frame: view.frame);
+//        self.view.addSubview(testView);
         
-        self.view.addSubview(testView);
-        //self.view.bringSubviewToFront(testView);
-//        HueBridgeService.singleton.getSystemState({ (systemState: SystemState) in
-//            self.createLightSwitchesScrollView(systemState.lightArray);
-//        });
+        HueBridgeService.singleton.getSystemState({ (systemState: SystemState) in
+            self.createLightSwitchesScrollView(systemState.lightArray);
+        });
     }
     
     /**
@@ -51,7 +55,7 @@ class ViewController: UIViewController {
     */
     func createLightSwitchesScrollView(lights:Array<Light>){
         dispatch_sync(dispatch_get_main_queue(), {
-            self.lightSwitchesScrollView = LightSwitchesScrollView(lights: lights, frame: self.view.bounds);
+            self.lightSwitchesScrollView = LightSwitchesScrollView(lights: lights, frame: self.view.frame);
             self.view.addSubview(self.lightSwitchesScrollView!);
             
         });

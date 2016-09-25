@@ -71,7 +71,7 @@ class HueBridgeService: NSObject {
             systemState.populateFromJson(json);
             callback(systemState);
             let systemStateJson = systemState.toJsonString();
-            EventBus.singleton.notify("jsonData", data: systemStateJson);
+            EventBus.singleton.notify(EventNames.JsonData.rawValue, data: systemStateJson);
         });
     }
     
@@ -92,7 +92,7 @@ class HueBridgeService: NSObject {
         setRequestBody(requestAndSession.request, body: jsonRequestBody!);
         
         performHttpRequestWithJSONResponse(requestAndSession.request, session: requestAndSession.session) { (jsonResponse, error) in
-            EventBus.singleton.notify("jsonData", data: jsonResponse.rawString()!);
+            EventBus.singleton.notify(EventNames.JsonData.rawValue, data: jsonResponse.rawString()!);
         }
         
     }

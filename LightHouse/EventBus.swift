@@ -16,6 +16,8 @@ typealias CallbackContainer = (id:Int, callback:Callback);
 
 enum EventNames : String{
     case HsbColorPickerColorSelected
+    case LightModelChanged
+    case JsonData
 }
 /**
  * The primary means of communication between classes/modules is an event bus, where modules can register callbacks

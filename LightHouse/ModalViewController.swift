@@ -20,5 +20,14 @@ class ModalViewController: UIViewController {
         //view.opaque = false
         
         self.view.addSubview(self.modalView);
+        createModalContents();
+    }
+    
+    func createModalContents(){
+        view.backgroundColor = UIColor.clearColor()
+        view.opaque = false
+        
+        self.view.addSubview(self.modalView);
+        
     }
 }
