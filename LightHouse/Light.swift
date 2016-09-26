@@ -38,4 +38,10 @@ class Light : EVObject{
     }
     
     required init(){}
+    
+    func toSetStateJsonFormat() -> String{
+        ConversionOptions.DefaultNSCoding = [.PropertyMapping];
+        //self.state?.toJsonString()
+        return self.toJsonString();
+    }
 }

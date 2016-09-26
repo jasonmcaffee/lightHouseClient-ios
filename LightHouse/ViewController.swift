@@ -42,8 +42,6 @@ class ViewController: UIViewController {
      * Once system state is retrieved, paints the screen.
     */
     func getSystemStateAndDrawUI(){
-//        var testView = TestView(frame: view.frame);
-//        self.view.addSubview(testView);
         
         HueBridgeService.singleton.getSystemState({ (systemState: SystemState) in
             self.createLightSwitchesScrollView(systemState.lightArray);
@@ -79,6 +77,7 @@ class ViewController: UIViewController {
     */
     func handleJsonDataEvent(data: AnyObject){
         if let jsonString = data as AnyObject? as? String?{
+            print(jsonString);
             dispatch_sync(dispatch_get_main_queue(), {
                 //self.debugTextView.text = self.debugTextView.text + "\n" + jsonString!;
             });
