@@ -77,7 +77,9 @@ class ViewController: UIViewController {
     */
     func handleJsonDataEvent(data: AnyObject){
         if let jsonString = data as AnyObject? as? String?{
-            print(jsonString);
+            let trimmed = jsonString!.stringByReplacingOccurrencesOfString("^\\s*",
+                                                                      withString: "", options: .RegularExpressionSearch)
+            print(trimmed);
             dispatch_sync(dispatch_get_main_queue(), {
                 //self.debugTextView.text = self.debugTextView.text + "\n" + jsonString!;
             });

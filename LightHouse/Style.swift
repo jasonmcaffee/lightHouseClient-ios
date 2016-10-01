@@ -11,10 +11,11 @@ import Foundation
 class Style: NSObject{
     
     class LightSwitch :NSObject {
-        static var labelHeight = 150;
+        static var labelHeight = 50;
         static var labelWidth = 200;
-        static var switchHeight = 150;
+        static var switchHeight = 50;
         static var switchWidth = 100;
+        static var height = labelHeight;
     }
     
     

@@ -31,7 +31,7 @@ class LightSwitch: UIView {
     func updateUIToReflectLightModel(light:Light){
         self.light = light;
         
-        self.backgroundColor = UIColor.brownColor()
+        //self.backgroundColor = UIColor.brownColor()
         //self.userInteractionEnabled = false;
         var label = UILabel(frame: CGRectMake(
             0,

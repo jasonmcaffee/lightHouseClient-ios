@@ -45,6 +45,7 @@ class State : EVObject{
     required init(){}
     
     func toSetStateJsonFormat() -> String{
+        //ensures our propertyMapping func is executed
         ConversionOptions.DefaultNSCoding = [.PropertyMapping];
         //self.state?.toJsonString()
         return self.toJsonString();
@@ -53,8 +54,9 @@ class State : EVObject{
     override public func propertyMapping() -> [(String?, String?)] {
         return [
             ("xy",nil),
-            ("colormode", nil),
-            ("reachable", nil)
+            //("colormode", nil),
+            ("reachable", nil),
+            ("alert", nil)
         ]
     }
 }

@@ -68,7 +68,7 @@ class LightSwitchesScrollView: UIView {
                     x: 0,
                     y: lastYForLightSwitch,
                     width: Int(self.bounds.width),
-                    height: 100));
+                    height: Style.LightSwitch.height));
                 
                 self.scrollView!.addSubview(lightSwitch);
                 
